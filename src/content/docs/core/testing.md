@@ -158,9 +158,9 @@ npx zenfs-test -ac -p            # run, keep the data, don't report
 ```
 
 `-p`/`--preserve` is helpful when you run several invocations that should be reported together.
-Each run clears the coverage directory unless it is set.
-That is why `@zenfs/core`'s `test` script cleans first,
-runs with `-p`, and reports at the end.
+Each run clears the coverage directory unless it is set,
+so a CI workflow that runs each setup as its own step can use `-p` on every step and `--report-only` at the end.
+A single run that covers everything only needs `--report`.
 
 ## Performance
 
