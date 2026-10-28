@@ -26,8 +26,8 @@
 	"devDependencies": {
 		"@astrojs/check": "^0.9.10",
 		"@astrojs/starlight": "^0.42.0",
-		"@eslint/js": "^10.0.1",
 		"@zenfs/core": "^2.0.0",
+		"@zenfs/devel": "^0.1.0",
 		"@zenfs/dom": "^1.0.6",
 		"astro": "^7.3.1",
 		"eslint": "^10.1.0",
@@ -37,8 +37,7 @@
 		"starlight-typedoc": "^0.23.1",
 		"typedoc": "^0.28.20",
 		"typedoc-plugin-markdown": "^4.13.0",
-		"typescript": "^6.0.0",
-		"typescript-eslint": "^8.58.0"
+		"typescript": "^6.0.0"
 	},
 	"prettier": {
 		"singleQuote": true,

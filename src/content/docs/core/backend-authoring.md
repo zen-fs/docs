@@ -134,12 +134,12 @@ Mostly you should need `ENOENT` when something is missing, `EEXIST` when creatin
 
 ## Testing
 
-`@zenfs/core` ships the test suite it uses on itself, so you can run the entire `fs` conformance suite against your backend. Write a setup file that configures it and copies in the fixture data:
+`@zenfs/devel` has the test suite every `@zenfs` package uses, so you can run the entire `fs` conformance suite against your backend. Install it as a dev dependency, then write a setup file that configures your backend and copies in the fixture data:
 
 ```ts
 import { configureSingle } from '@zenfs/core';
-import { copyAsync, data } from '@zenfs/core/tests/setup';
-import { Example } from '../src/index.js';
+import { copyAsync, data } from '@zenfs/devel/tests/setup';
+import { Example } from '../dist/index.js';
 
 await configureSingle({ backend: Example, raw: /* ... */ });
 await copyAsync(data);
