@@ -61,7 +61,7 @@ function git(label: string, cwd: string, ...args: string[]): string {
 /** The most recent release tag for a repository. */
 function latestTag(pkg: Package): string {
 	const url = `https://github.com/zen-fs/${pkg.repo}`;
-	const output = git(`${pkg.name}: finding latest release`, root, 'ls-remote', '--tags', '--refs', '--sort=-v:refname', url, 'v*');
+	const output = git(`${pkg.name}: finding latest release`, root, '-c', 'versionsort.suffix=-', 'ls-remote', '--tags', '--refs', '--sort=-v:refname', url, 'v*');
 	const tag = output.split('\n')[0]?.split('refs/tags/')[1];
 	if (!tag) io.exit(`No release tags found for zen-fs/${pkg.repo}`);
 	return tag;
