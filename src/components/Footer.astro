@@ -9,17 +9,17 @@ const links = [
 ] as const;
 ---
 
-<Default><slot /></Default>
+<Default>
+	<slot />
+</Default>
 
 <div class="project-links">
-	{
-		links.map(({ icon, label, href }) => (
-			<a href={href}>
-				<Icon name={icon} size="1rem" />
-				{label}
-			</a>
-		))
-	}
+	{links.map(({ icon, label, href }) => (
+		<a href={href}>
+			<Icon name={icon} size="1rem" />
+			{label}
+		</a>
+	))}
 </div>
 
 <style>

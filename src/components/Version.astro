@@ -20,13 +20,11 @@ const { pkg } = Astro.props;
 const version = (staged as Record<string, Staged>)[pkg];
 ---
 
-{
-	version && (
-		<p class="version">
-			Reference generated from <a href={`https://github.com/zen-fs/${version.repo}/tree/${version.ref}`}>{version.version}</a>.
-		</p>
-	)
-}
+{version && (
+	<p class="version">
+		Reference generated from <a href={`https://github.com/zen-fs/${version.repo}/tree/${version.ref}`}>{version.version}</a>.
+	</p>
+)}
 
 <style>
 	.version {
