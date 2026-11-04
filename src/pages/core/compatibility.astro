@@ -68,7 +68,9 @@ const complete = latest.prs.covered == latest.prs.total && latest.apis.covered =
 				))}
 			</ul>
 		</>
-	) : <p>Missing ones will show up here in the future.</p>}
+	) : (
+		<p>Missing ones will show up here in the future.</p>
+	)}
 	{compat.unsupported.length > 0 && (
 		<>
 			<p>Not implemented since they don't apply to ZenFS:</p>
