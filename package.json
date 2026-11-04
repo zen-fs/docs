@@ -4,7 +4,7 @@
 	"version": "1.0.0",
 	"description": "The ZenFS documentation site",
 	"scripts": {
-		"sources": "node scripts/sources.ts",
+		"sources": "node scripts/sources.ts && node scripts/compat.ts",
 		"dev": "npm run sources && astro dev",
 		"build": "npm run sources && astro build",
 		"preview": "astro preview",

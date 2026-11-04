@@ -1,0 +1,18 @@
+---
+import data from '../../.sources/compat.json';
+import type { Compat } from '../../scripts/compat.ts';
+
+const { zenfs, implemented, latest, lastComplete } = data as Compat;
+---
+
+<span>
+	ZenFS v{zenfs} implements {implemented == latest.apis.total ? 'every' : `${implemented}/${latest.apis.total}`} <code>fs</code> API{implemented != latest.apis.total && 's'}{' '}
+	documented for Node.js v{latest.version}
+	{lastComplete ? (
+		<>
+			, and fully supports <a href="/core/compatibility/">Node.js v{lastComplete.version}</a>.
+		</>
+	) : (
+		'.'
+	)}
+</span>

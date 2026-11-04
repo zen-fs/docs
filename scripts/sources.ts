@@ -112,6 +112,7 @@ function link(pkg: Package): Staged {
 		remove(path);
 		mkdirSync(path);
 		symlinkSync(join(target, 'src'), join(path, 'src'), 'dir');
+		if (existsSync(join(target, 'node-compat.json'))) symlinkSync(join(target, 'node-compat.json'), join(path, 'node-compat.json'));
 		if (existsSync(join(target, 'node_modules'))) symlinkSync(join(target, 'node_modules'), join(path, 'node_modules'), 'dir');
 		writeTsconfig(target, path);
 	});

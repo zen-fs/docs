@@ -41,11 +41,11 @@ for (const pkg of packages) {
 }
 
 /** A package's sidebar group: its own pages, then its generated reference. */
-function group(name: string, label: string, pages: string[] = []) {
+function group(name: string, label: string, pages: (string | { label: string; link: string })[] = []) {
 	return {
 		label,
 		collapsed: true,
-		items: [{ label: 'Overview', slug: name }, ...pages.map(page => ({ slug: `${name}/${page}` })), reference[name]],
+		items: [{ label: 'Overview', slug: name }, ...pages.map(page => (typeof page == 'string' ? { slug: `${name}/${page}` } : page)), reference[name]],
 	};
 }
 
@@ -79,7 +79,17 @@ export default defineConfig({
 					label: 'Getting started',
 					items: [{ slug: 'start/introduction' }, { slug: 'start/installation' }, { slug: 'start/quick-start' }, { slug: 'start/usage' }],
 				},
-				group('core', '@zenfs/core', ['configuration', 'vfs', 'backends', 'architecture', 'internal', 'security', 'testing', 'backend-authoring']),
+				group('core', '@zenfs/core', [
+					'configuration',
+					{ label: 'Node.js compatibility', link: '/core/compatibility/' },
+					'vfs',
+					'backends',
+					'architecture',
+					'internal',
+					'security',
+					'testing',
+					'backend-authoring',
+				]),
 				group('dom', '@zenfs/dom'),
 				group('archives', '@zenfs/archives'),
 				group('cloud', '@zenfs/cloud'),

@@ -1,0 +1,108 @@
+---
+/*
+ * `.sources/compat.json` is written by `npm run sources`. It is imported directly for the same reason
+ * `Version.astro` imports `versions.json`.
+ */
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import data from '../../../.sources/compat.json';
+import type { Compat, ReleaseCompat } from '../../../scripts/compat.ts';
+
+const compat = data as Compat;
+const { latest, lastComplete } = compat;
+
+const coverage = ({ covered, total }: ReleaseCompat['prs']) => `${covered}/${total} (${Math.floor((covered / total) * 100)}%)`;
+const date = (iso: string) => new Date(iso).toLocaleDateString('en-US', { dateStyle: 'long', timeZone: 'UTC' });
+const releaseLink = (version: string) => `https://nodejs.org/en/blog/release/v${version}`;
+const complete = latest.prs.covered == latest.prs.total && latest.apis.covered == latest.apis.total;
+---
+
+<StarlightPage
+	frontmatter={{
+		title: 'Node.js compatibility',
+		description: 'How much of the Node.js `fs` API ZenFS supports.',
+		editUrl: 'https://github.com/zen-fs/docs/edit/main/src/pages/core/compatibility.astro',
+	}}
+	headings={[
+		{ depth: 2, slug: 'apis', text: 'APIs' },
+		{ depth: 2, slug: 'pull-requests', text: 'Pull requests' },
+	]}
+>
+	<p>
+		ZenFS tracks{' '}
+		<a href="https://nodejs.org/api/fs.html">
+			Node.js <code>fs</code> API
+		</a>{' '}
+		compatibility using both the API documention and pull requests (since Node.js v4).
+	</p>
+
+	<p>
+		Which pull requests have been implemented, and which don't apply, is recorded in{' '}
+		<a href="https://github.com/zen-fs/core/blob/main/node-compat.json">
+			<code>node-compat.json</code>
+		</a>
+		.
+	</p>
+
+	<p>
+		As of v{compat.zenfs}, ZenFS covers <a href="#apis">{coverage(latest.apis)}</a> of the documented API and <a href="#pull-requests">{coverage(latest.prs)}</a> of the pull
+		requests in <a href={releaseLink(latest.version)}>Node.js v{latest.version}</a>.
+		{lastComplete && (
+			<>
+				The newest release with everything covered is <a href={releaseLink(lastComplete.version)}>Node.js v{lastComplete.version}</a>.
+			</>
+		)}
+	</p>
+
+	<h2 id="apis">APIs</h2>
+	<p>
+		ZenFS implements {compat.implemented} of the {latest.apis.total} APIs documented for Node.js v{latest.version}.
+	</p>
+	{compat.missing.length > 0 ? (
+		<>
+			<p>Missing:</p>
+			<ul>
+				{compat.missing.map(id => (
+					<li>
+						<code>{id}</code>
+					</li>
+				))}
+			</ul>
+		</>
+	) : <p>Missing ones will show up here in the future.</p>}
+	{compat.unsupported.length > 0 && (
+		<>
+			<p>Not implemented since they don't apply to ZenFS:</p>
+			<ul>
+				{compat.unsupported.map(({ id, note }) => (
+					<li>
+						<code>{id}</code>
+						{note && `: ${note}`}
+					</li>
+				))}
+			</ul>
+		</>
+	)}
+
+	<h2 id="pull-requests">Pull requests</h2>
+	<p>
+		Node.js v{latest.version} includes {latest.prs.total} pull requests that change <code>fs</code>. Of those:
+	</p>
+	<ul>
+		<li>{compat.prs.resolved} have been implemented in ZenFS</li>
+		<li>{compat.prs.auto} add APIs that ZenFS already has</li>
+		<li>{compat.prs.ignored} don't apply to ZenFS</li>
+		{compat.prs.pending > 0 && <li>{compat.prs.pending} are pending</li>}
+	</ul>
+	{compat.pending.length > 0 && (
+		<>
+			<p>Pending:</p>
+			<ul>
+				{compat.pending.map(({ number, title }) => (
+					<li>
+						<a href={`https://github.com/nodejs/node/pull/${number}`}>#{number}</a> {title}
+					</li>
+				))}
+			</ul>
+		</>
+	)}
+</StarlightPage>

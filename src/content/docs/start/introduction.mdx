@@ -3,11 +3,13 @@ title: What is ZenFS?
 description: An overview of ZenFS, its backends, and where it runs.
 ---
 
+import CompatSummary from '../../../components/CompatSummary.astro';
+
 ZenFS is a cross-platform library that emulates the [Node.js filesystem API](https://nodejs.org/api/fs.html).
 It works using a system of backends, which are used by ZenFS to store and retrieve data.
 
-ZenFS should cover the full API surface of the latest Node.js version, though complex changes may lag a little bit.
-That includes the callback API, the synchronous API, and `fs/promises`. All with with full type compatibility.
+<CompatSummary /> That includes the callback API, the synchronous API, and `fs/promises`, all with full type compatibility. Complex changes in new Node.js releases may lag a little
+bit, see [Node.js compatibility](/core/compatibility/) for the details.
 
 ## Backends
 
